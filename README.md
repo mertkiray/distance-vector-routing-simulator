@@ -1,9 +1,9 @@
-### Distance Vector Routing Simulator
-# Deniz Toprak – 36235
+# Distance Vector Routing Simulator
+### Deniz Toprak – 36235
 
-# Mert Kýray - 29202
+### Mert Kýray - 29202
 
-# COMP416 – Computer Networks Project #3 Report
+## COMP416 – Computer Networks Project #3 Report
 
 In this project we were asked to implement a Distance Vector Routing Simulator.
 

@@ -33,7 +33,39 @@ public class Node
             // Otherwise, choose a random neighbor (see randomNeighbor method)
 
             // WRITE YOUR CODE HERE
+        	this.cost[i] = DVSimulator.cost[id][i];
+        	this.myDV = this.cost;
+//        	System.out.println("myDV to "+i+ " is "+this.myDV[i]);
+//        	System.out.println("Costs are: "+i+ " = "+this.cost[i]);
         }
+        this.neighbors = DVSimulator.neighbors[id];
+//        for(int a=0; a<this.neighbors.length; a++){
+//        	System.out.println("Neighbors are: "+ this.neighbors[a]);
+//        }
+        for(int i = 0; i<DVSimulator.NUMNODES; i++){
+        	
+        	if(this.getId() == i){
+        		bestPath[i]=this.getId();
+        	}else{
+        		boolean contains = false;
+        		for(int a : this.neighbors){
+        			if(a==i){
+        				contains = true;
+        			}
+        		}
+        		if(contains){
+        			bestPath[i] = i;
+        		}else{
+        			bestPath[i] = randomNeighbor();
+        		}
+        		
+        	}
+        }
+//        for(int i=0; i<this.bestPath.length; i++){
+//        	System.out.println("Best path to "+i+" is "+ this.bestPath[i]);
+//        }
+        
+        
 
         // send initial DV to neighbors
         notifyNeighbors();
@@ -76,6 +108,12 @@ public class Node
         // then send packet using helper method sendPacket in DVSimulator
 
         // WRITE YOUR CODE HERE
+    	for(int a : this.neighbors){
+    		Packet packet = new Packet(this.getId(), a, this.myDV);
+    		DVSimulator.sendPacket(packet);
+    	}
+    	
+    	
     }
 
     public void updateDV(Packet p) {
@@ -92,6 +130,22 @@ public class Node
         // 2. Increment the convergence measure numUpdates variable once
 
         // WRITE YOUR CODE HERE
+        for(int index=0; index<this.neighborDV[neighbor_id].length; index++){
+        	int cost = this.neighborDV[neighbor_id][index];
+        	if(this.myDV[index]>this.cost[neighbor_id]+ this.neighborDV[neighbor_id][index]){
+        		this.myDV[index] = this.cost[neighbor_id]+ this.neighborDV[neighbor_id][index];
+        		this.bestPath[index] = neighbor_id;
+        		
+        		System.out.println("Neighbor id: "+neighbor_id + " changed: "+ this.getId() + " to "+index);
+        		
+        		notifyNeighbors();
+        		this.numUpdates++;
+        		
+
+        	}
+        }
+        
+        
     }
 
     public void buildFwdTable() {

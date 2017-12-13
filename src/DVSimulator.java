@@ -22,42 +22,42 @@ public class DVSimulator
         time = 0.0;
 
         neighbors = new int[NUMNODES][];
-        neighbors[0] = new int[] {1, 2};
-        neighbors[1] = new int[] {0, 2, 3, 4};
-        neighbors[2] = new int[] {0, 1, 3};
+        neighbors[0] = new int[] {1};
+        neighbors[1] = new int[] {0, 3, 4};
+        neighbors[2] = new int[] {3};
         neighbors[3] = new int[] {1, 2, 4};
         neighbors[4] = new int[] {1, 3};
 
         //Weight of the edges in the graph
         cost = new int[NUMNODES][NUMNODES];
         cost[0][0] = 0;
-        cost[0][1] = 2;
-        cost[0][2] = 11;
+        cost[0][1] = 9;
+        cost[0][2] = 999;
 		cost[0][3] = 999;
         cost[0][4] = 999;
         
-		cost[1][0] = 2;
+		cost[1][0] = 9;
         cost[1][1] = 0;
-        cost[1][2] = 3;
-        cost[1][3] = 4;
-		cost[1][4] = 8;
+        cost[1][2] = 999;
+        cost[1][3] = 11;
+		cost[1][4] = 2;
 		
-		cost[2][0] = 11;
-        cost[2][1] = 3;
-        cost[2][2] = 0;
-        cost[2][3] = 2;
+		cost[2][0] = 999;
+        cost[2][1] = 999;
+        cost[2][2] = 999;
+        cost[2][3] = 4;
 		cost[2][4] = 999;
         
 		cost[3][0] = 999;
-        cost[3][1] = 4;
-        cost[3][2] = 2;
+        cost[3][1] = 11;
+        cost[3][2] = 4;
         cost[3][3] = 0;
-		cost[3][4] = 6;
+		cost[3][4] = 4;
 		
-		cost[4][0] =999 ;
-		cost[4][1] = 8;
+		cost[4][0] = 999 ;
+		cost[4][1] = 2;
 		cost[4][2] = 999;
-		cost[4][3] = 6;
+		cost[4][3] = 4;
 		cost[4][4] = 0;
 
         nodes = new Node[NUMNODES];

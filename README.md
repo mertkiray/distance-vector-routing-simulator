@@ -1,7 +1,7 @@
 # Distance Vector Routing Simulator
 ### Deniz Toprak – 36235
 
-### Mert Kýray - 29202
+### Mert Kiray - 29202
 
 ## COMP416 – Computer Networks Project #3 Report
 

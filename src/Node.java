@@ -33,29 +33,38 @@ public class Node
             // Otherwise, choose a random neighbor (see randomNeighbor method)
 
             // WRITE YOUR CODE HERE
+        	//Initialize cost of this node to i
         	this.cost[i] = DVSimulator.cost[id][i];
+        	//Initialize myDV.
+        	//Because the node does not have any other information about other nodes initially, myDV equals cost.
         	this.myDV = this.cost;
 //        	System.out.println("myDV to "+i+ " is "+this.myDV[i]);
 //        	System.out.println("Costs are: "+i+ " = "+this.cost[i]);
         }
+        //Initialize neighbors from DVSimulator
         this.neighbors = DVSimulator.neighbors[id];
 //        for(int a=0; a<this.neighbors.length; a++){
 //        	System.out.println("Neighbors are: "+ this.neighbors[a]);
 //        }
+        //Initialization of bestPath. Index = destination node, value = next node
         for(int i = 0; i<DVSimulator.NUMNODES; i++){
         	
         	if(this.getId() == i){
-        		bestPath[i]=this.getId();
+        		//destination node is  itself
+        		bestPath[i]=this.getId();        		
         	}else{
-        		boolean contains = false;
+        		//if destination node is a neighbor of the node
+        		boolean isNeighbor = false;
         		for(int a : this.neighbors){
         			if(a==i){
-        				contains = true;
+        				isNeighbor = true;
         			}
         		}
-        		if(contains){
+        		if(isNeighbor){
+        			//destination node is a neighbor of the node
         			bestPath[i] = i;
         		}else{
+        			//destination node is not a neighbor of the node, so a random node is selected
         			bestPath[i] = randomNeighbor();
         		}
         		
@@ -108,6 +117,7 @@ public class Node
         // then send packet using helper method sendPacket in DVSimulator
 
         // WRITE YOUR CODE HERE
+    	//Send myDV to all of neighbors of the node
     	for(int a : this.neighbors){
     		Packet packet = new Packet(this.getId(), a, this.myDV);
     		DVSimulator.sendPacket(packet);
@@ -130,15 +140,21 @@ public class Node
         // 2. Increment the convergence measure numUpdates variable once
 
         // WRITE YOUR CODE HERE
-        for(int index=0; index<this.neighborDV[neighbor_id].length; index++){
-        	int cost = this.neighborDV[neighbor_id][index];
-        	if(this.myDV[index]>this.cost[neighbor_id]+ this.neighborDV[neighbor_id][index]){
-        		this.myDV[index] = this.cost[neighbor_id]+ this.neighborDV[neighbor_id][index];
-        		this.bestPath[index] = neighbor_id;
+        for(int nextNode=0; nextNode<this.neighborDV[neighbor_id].length; nextNode++){
+        	int cost = this.neighborDV[neighbor_id][nextNode];
+        	
+        	if(this.myDV[nextNode]>this.cost[neighbor_id]+ this.neighborDV[neighbor_id][nextNode]){
+        		//A smaller cost found in neighborDV between the node and nextNode
+        		//Update myDV
+        		this.myDV[nextNode] = this.cost[neighbor_id]+ this.neighborDV[neighbor_id][nextNode];
+        		//Update bestPath
+        		this.bestPath[nextNode] = neighbor_id;
         		
-        		System.out.println("Neighbor id: "+neighbor_id + " changed: "+ this.getId() + " to "+index);
+//        		System.out.println("Neighbor id: "+neighbor_id + " changed: "+ this.getId() + " to "+nextNode);
         		
+        		//Notify neighbors about the change in myDV
         		notifyNeighbors();
+        		//Increment update time
         		this.numUpdates++;
         		
 
